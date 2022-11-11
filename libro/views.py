@@ -6,7 +6,7 @@ from django.db import IntegrityError
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-from fpdf import FPDF 
+from fpdf import FPDF
 from django.http import HttpResponse
 from datetime import datetime
 
