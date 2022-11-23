@@ -12,6 +12,9 @@ from datetime import datetime
 
 from libro.forms import crearAfiliado
 from libro.models import Afiliado
+from libro.forms import crearUsuario
+from libro.models import Usuario
+
 
 # Generate PDF
 class PDF(FPDF):
@@ -102,10 +105,35 @@ def afiliados(request):
 
 @login_required
 def asistencia(request):
-    afiliados = Afiliado.objects.filter(
-        user=request.user, datecompleted__isnull=True)
+    usuarios = Usuario.objects.filter()
+    return render(request, 'asistencia.html', {'usuarios': usuarios})
 
-    return render(request, 'asistencia.html', {'afiliados': afiliados})
+@login_required
+def usuario_create(request):
+    if request.method == 'GET':
+        return render(request, 'usuario_create.html', {
+            'form': crearUsuario
+        })
+    else:
+        try:
+            print(request.POST)
+            form = crearUsuario(request.POST)
+            nuevo_usuario = form.save(commit=False)
+            nuevo_usuario.user = request.user
+            nuevo_usuario.save()
+            return redirect('asistencia')
+
+        except ValueError:
+            return render(request, 'usuario_create.html', {
+                'form': crearUsuario,
+                'error': 'Por favor proporcione datos válidos'
+            })
+
+        except IntegrityError:
+            return render(request, 'usuario_create.html', {
+                'form': crearUsuario,
+                'error': 'Por favor seleccione una fecha de nacimiento real'
+            })
 
 @login_required
 def afiliado_create(request):
@@ -133,6 +161,13 @@ def afiliado_create(request):
                 'error': 'Por favor seleccione una fecha de nacimiento real'
             })
 
+
+@login_required
+def usuario_delete(request, afiliado_id):
+    usuario = get_object_or_404(Usuario, pk=afiliado_id)
+    if request.method == 'POST':
+        usuario.delete()
+        return redirect('asistencia')
 
 @login_required
 def afiliado_detail(request, afiliado_id):
