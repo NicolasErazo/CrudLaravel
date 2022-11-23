@@ -169,7 +169,7 @@ def all_delete(request):
 
         for usuario in usuarios:
             data.append(
-                [usuario.nombres, usuario.tipo_documento, usuario.asistencia])
+                [usuario.nombres, usuario.numero_documento, usuario.asistencia])
 
         print(data)
         pdf = PDFTable()
@@ -192,6 +192,19 @@ def all_delete(request):
                 pdf.cell(col_width, 2*th, str(datum), border=1, align='C')
 
             pdf.ln(2*th)
+        pdf.multi_cell(0, 10, '', 0, 'J')
+        pdf.multi_cell(0, 10, '', 0, 'J')
+        pdf.multi_cell(0, 10, '', 0, 'J')
+        pdf.multi_cell(0, 10, '', 0, 'J')
+        pdf.multi_cell(0, 10, '', 0, 'J')
+        pdf.multi_cell(0, 10, '', 0, 'J')
+        pdf.set_font('Arial', 'B', 12)
+        pdf.multi_cell(
+            0, 10, '______________________________         ______________________________', 0, 'C')
+        pdf.multi_cell(
+            0, 10, 'ANSELMO QUEVEDO                                 CLAUDIA PATRICIA PAEZ', 0, 'C')
+        pdf.multi_cell(
+            0, 10, 'PRESIDENTE(A)                                           SECRETARIO(A)', 0, 'C')    
 
         response = HttpResponse(pdf.output(dest='S').encode(
             'latin-1'), content_type='application/pdf')
