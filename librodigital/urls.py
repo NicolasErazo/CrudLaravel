@@ -26,6 +26,7 @@ urlpatterns = [
     path('signin/', views.signin, name='signin'),
     path('afiliados/', views.afiliados, name='afiliados'),
     path('asistencia/', views.asistencia, name='asistencia'),
+    path('asistencia/delete/', views.all_delete, name='all_delete'),
     path('afiliados/crear/', views.afiliado_create, name='afiliado_create'),
     path('asistencia/asistio/', views.usuario_create, name='usuario_create'),
     path('asistencia/<int:afiliado_id>/delete', views.usuario_delete, name='usuario_delete'),
