@@ -204,7 +204,7 @@ def all_delete(request):
         pdf.multi_cell(
             0, 10, 'ANSELMO QUEVEDO                                 CLAUDIA PATRICIA PAEZ', 0, 'C')
         pdf.multi_cell(
-            0, 10, 'PRESIDENTE(A)                                           SECRETARIO(A)', 0, 'C')    
+            0, 10, 'PRESIDENTE(A)                                           SECRETARIO(A)', 0, 'C')
 
         response = HttpResponse(pdf.output(dest='S').encode(
             'latin-1'), content_type='application/pdf')
